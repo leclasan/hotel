@@ -1,0 +1,62 @@
+[gd_scene load_steps=6 format=3 uid="uid://cdxsixbghgduy"]
+
+[ext_resource type="Texture2D" uid="uid://cyb34jip2obce" path="res://icon.svg" id="1_fek5t"]
+[ext_resource type="Script" uid="uid://6f07rj5l7tko" path="res://scripts/persons/person_1.gd" id="1_ibylh"]
+[ext_resource type="Script" uid="uid://bshvub12tope7" path="res://scripts/UI/tooltip.gd" id="2_wn7a6"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fek5t"]
+size = Vector2(128, 128)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wn7a6"]
+content_margin_left = 3.0
+content_margin_top = 3.0
+content_margin_right = 3.0
+content_margin_bottom = 3.0
+bg_color = Color(0.16862746, 0.16862746, 0.16862746, 0.69411767)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[node name="Person1" type="Area2D"]
+top_level = true
+z_index = 6
+script = ExtResource("1_ibylh")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+self_modulate = Color(0, 0, 1, 1)
+texture = ExtResource("1_fek5t")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_fek5t")
+
+[node name="Tooltip" type="PanelContainer" parent="."]
+visible = false
+top_level = true
+z_index = 50
+offset_right = 229.0
+offset_bottom = 86.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_wn7a6")
+script = ExtResource("2_wn7a6")
+
+[node name="TooltipText" type="RichTextLabel" parent="Tooltip"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_font_sizes/normal_font_size = 14
+theme_override_font_sizes/bold_font_size = 14
+theme_override_font_sizes/bold_italics_font_size = 14
+theme_override_font_sizes/italics_font_size = 14
+theme_override_font_sizes/mono_font_size = 14
+bbcode_enabled = true
+text = "[b]Normal person[/b]  [br] It needs a room  for  3 coins. [br]  [i] for an additional room he gives 3 coins.[/i] [br] He stays for two rounds"
+fit_content = true
+autowrap_mode = 0
+
+[connection signal="mouse_entered" from="." to="Tooltip" method="toggle" binds= [true]]
+[connection signal="mouse_exited" from="." to="Tooltip" method="toggle" binds= [false]]
