@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://dl81ykniw6fk4"]
+
+[ext_resource type="Script" uid="uid://bii546nile5j5" path="res://scripts/cards/buyers/hallway_buyer.gd" id="1_r3265"]
+[ext_resource type="Texture2D" uid="uid://b46udxla6rmhd" path="res://assets/cards/buyers/02_cardprice_Hallway_Better(2).png" id="2_r3265"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xu6hl"]
+size = Vector2(90, 118)
+
+[node name="HallwayBuyer" type="Area2D" groups=["buyers"]]
+collision_mask = 0
+script = ExtResource("1_r3265")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -1)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("2_r3265")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 3)
+shape = SubResource("RectangleShape2D_xu6hl")
+
+[connection signal="input_event" from="." to="." method="_on_input_event"]

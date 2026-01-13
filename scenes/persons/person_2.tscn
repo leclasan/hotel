@@ -1,9 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://cdxsixbghgduy"]
+[gd_scene load_steps=7 format=3 uid="uid://m6jjojgxag7i"]
 
-[ext_resource type="Script" uid="uid://6f07rj5l7tko" path="res://scripts/persons/person_1.gd" id="1_ibylh"]
-[ext_resource type="Texture2D" uid="uid://cinyfdc0vnlg3" path="res://assets/cards/persons/04_Person_Ant_Better(1).png" id="2_5bkpd"]
-[ext_resource type="Script" uid="uid://bshvub12tope7" path="res://scripts/UI/tooltip.gd" id="2_wn7a6"]
-[ext_resource type="FontFile" uid="uid://b3h7ukt25088t" path="res://assets/fonts/SCHLBKB.TTF" id="4_5bkpd"]
+[ext_resource type="Script" uid="uid://yykvcnvdt3am" path="res://scripts/persons/person_2.gd" id="1_jhyoo"]
+[ext_resource type="Script" uid="uid://bshvub12tope7" path="res://scripts/UI/tooltip.gd" id="2_jhyoo"]
+[ext_resource type="Texture2D" uid="uid://dqcjs15s74kq0" path="res://assets/cards/persons/08_Person_Tiger_Better(2).png" id="2_wtsm1"]
+[ext_resource type="FontFile" uid="uid://b3h7ukt25088t" path="res://assets/fonts/SCHLBKB.TTF" id="3_wtsm1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fek5t"]
 size = Vector2(91, 118.5)
@@ -24,17 +24,16 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
-[node name="Person1" type="Area2D"]
+[node name="Person2" type="Area2D"]
 top_level = true
 z_index = 6
-script = ExtResource("1_ibylh")
+script = ExtResource("1_jhyoo")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.25, 0.25)
-texture = ExtResource("2_5bkpd")
+texture = ExtResource("2_wtsm1")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-1, -1.5)
 shape = SubResource("RectangleShape2D_fek5t")
 
 [node name="Tooltip" type="PanelContainer" parent="."]
@@ -45,23 +44,23 @@ offset_right = 229.0
 offset_bottom = 86.0
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_wn7a6")
-script = ExtResource("2_wn7a6")
+script = ExtResource("2_jhyoo")
 
 [node name="TooltipText" type="RichTextLabel" parent="Tooltip"]
 layout_mode = 2
 mouse_filter = 2
-theme_override_fonts/normal_font = ExtResource("4_5bkpd")
-theme_override_fonts/bold_font = ExtResource("4_5bkpd")
-theme_override_fonts/bold_italics_font = ExtResource("4_5bkpd")
-theme_override_fonts/italics_font = ExtResource("4_5bkpd")
-theme_override_fonts/mono_font = ExtResource("4_5bkpd")
+theme_override_fonts/normal_font = ExtResource("3_wtsm1")
+theme_override_fonts/bold_font = ExtResource("3_wtsm1")
+theme_override_fonts/bold_italics_font = ExtResource("3_wtsm1")
+theme_override_fonts/italics_font = ExtResource("3_wtsm1")
+theme_override_fonts/mono_font = ExtResource("3_wtsm1")
 theme_override_font_sizes/normal_font_size = 14
 theme_override_font_sizes/bold_font_size = 14
 theme_override_font_sizes/bold_italics_font_size = 14
 theme_override_font_sizes/italics_font_size = 14
 theme_override_font_sizes/mono_font_size = 14
 bbcode_enabled = true
-text = "[b] Ant [/b]  [br] It needs a room  for  2 coins. [br] He stays for two rounds"
+text = "[b] Tiger [/b]  [br] It needs 3 rooms  for  9 coins. [br]  [i] He stays for tw3 rounds"
 fit_content = true
 autowrap_mode = 0
 

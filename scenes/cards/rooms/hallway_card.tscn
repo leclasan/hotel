@@ -1,9 +1,9 @@
-[gd_scene load_steps=16 format=3 uid="uid://cdf48axnnqyeg"]
+[gd_scene load_steps=17 format=3 uid="uid://maaxujfptt4t"]
 
-[ext_resource type="Script" uid="uid://ckhh5mk0d40bx" path="res://scripts/cards/rooms/room_card.gd" id="1_lnh00"]
-[ext_resource type="Texture2D" uid="uid://b8vupsms1l8mp" path="res://assets/cards/rooms/04_Room_Better(1).png" id="2_m02it"]
-[ext_resource type="Script" uid="uid://dpwmnw0jvavxb" path="res://scripts/UI/upgrade_tooltip.gd" id="3_m02it"]
-[ext_resource type="FontFile" uid="uid://b3h7ukt25088t" path="res://assets/fonts/SCHLBKB.TTF" id="4_pyyog"]
+[ext_resource type="Script" uid="uid://cmewkho0p4pml" path="res://scripts/cards/rooms/hallway_card.gd" id="1_ub876"]
+[ext_resource type="Texture2D" uid="uid://d4nsdvpftcm74" path="res://assets/cards/rooms/03_Hallway_Better(2).png" id="2_cxru6"]
+[ext_resource type="Script" uid="uid://dpwmnw0jvavxb" path="res://scripts/UI/upgrade_tooltip.gd" id="3_cxru6"]
+[ext_resource type="FontFile" uid="uid://b3h7ukt25088t" path="res://assets/fonts/SCHLBKB.TTF" id="4_ieivf"]
 
 [sub_resource type="Animation" id="Animation_gebks"]
 length = 0.001
@@ -98,17 +98,20 @@ _data = {
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y4h16"]
-size = Vector2(6, 20)
+size = Vector2(6, 20.3)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hq3rq"]
-size = Vector2(7, 42.25)
+size = Vector2(1, 51)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cxru6"]
+size = Vector2(135, 118)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lnh00"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_m02it"]
-size = Vector2(128, 128)
+size = Vector2(129, 128)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pduhd"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vcb10"]
 content_margin_left = 3.0
 content_margin_top = 3.0
 content_margin_right = 3.0
@@ -124,15 +127,13 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
-[node name="RoomCard" type="Node2D" groups=["room_cards"]]
+[node name="HallwayCard" type="Node2D" groups=["hallway_cards"]]
 process_mode = 1
-script = ExtResource("1_lnh00")
-metadata/_edit_horizontal_guides_ = [2225.0]
-metadata/_edit_vertical_guides_ = [-79.0]
+script = ExtResource("1_ub876")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.25, 0.25)
-texture = ExtResource("2_m02it")
+texture = ExtResource("2_cxru6")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -142,60 +143,40 @@ libraries = {
 [node name="DoorArea" type="Area2D" parent="." groups=["doors"]]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DoorArea"]
-position = Vector2(62, 4)
-shape = SubResource("RectangleShape2D_y4h16")
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="DoorArea"]
-position = Vector2(-62, 4)
-shape = SubResource("RectangleShape2D_y4h16")
-
-[node name="CollisionShape2D3" type="CollisionShape2D" parent="DoorArea"]
-position = Vector2(0, -61)
+position = Vector2(-0.35, -64)
 rotation = 1.5707964
 shape = SubResource("RectangleShape2D_y4h16")
 
-[node name="CollisionShape2D4" type="CollisionShape2D" parent="DoorArea"]
-position = Vector2(0, 61)
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="DoorArea"]
+position = Vector2(-0.34999847, 64)
 rotation = 1.5707964
 shape = SubResource("RectangleShape2D_y4h16")
 
 [node name="WallArea" type="Area2D" parent="." groups=["walls"]]
 
-[node name="CollisionShape2D5" type="CollisionShape2D" parent="WallArea"]
-position = Vector2(61.5, 36.875)
-shape = SubResource("RectangleShape2D_hq3rq")
-
 [node name="CollisionShape2D6" type="CollisionShape2D" parent="WallArea"]
-position = Vector2(61.5, -31.75)
+position = Vector2(37.5, -64)
+rotation = 1.5707964
 shape = SubResource("RectangleShape2D_hq3rq")
 
 [node name="CollisionShape2D7" type="CollisionShape2D" parent="WallArea"]
-position = Vector2(-62.5, 36.875)
+position = Vector2(-37.5, -64)
+rotation = 1.5707964
 shape = SubResource("RectangleShape2D_hq3rq")
 
 [node name="CollisionShape2D8" type="CollisionShape2D" parent="WallArea"]
-position = Vector2(-62.5, -31.75)
+position = Vector2(37.5, 64)
+rotation = 1.5707964
 shape = SubResource("RectangleShape2D_hq3rq")
 
 [node name="CollisionShape2D9" type="CollisionShape2D" parent="WallArea"]
-position = Vector2(-34.5, -60.125)
+position = Vector2(-37.5, 64)
 rotation = 1.5707964
 shape = SubResource("RectangleShape2D_hq3rq")
 
-[node name="CollisionShape2D10" type="CollisionShape2D" parent="WallArea"]
-position = Vector2(34.5, -60.75)
-rotation = 1.5707964
-shape = SubResource("RectangleShape2D_hq3rq")
-
-[node name="CollisionShape2D11" type="CollisionShape2D" parent="WallArea"]
-position = Vector2(-34.5, 61.875)
-rotation = 1.5707964
-shape = SubResource("RectangleShape2D_hq3rq")
-
-[node name="CollisionShape2D12" type="CollisionShape2D" parent="WallArea"]
-position = Vector2(34.5, 61.25)
-rotation = 1.5707964
-shape = SubResource("RectangleShape2D_hq3rq")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallArea"]
+position = Vector2(-0.5, 0)
+shape = SubResource("RectangleShape2D_cxru6")
 
 [node name="CenterArea" type="Area2D" parent="." groups=["center"]]
 
@@ -205,10 +186,10 @@ shape = SubResource("RectangleShape2D_lnh00")
 [node name="MouseDetectArea" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MouseDetectArea"]
+position = Vector2(-0.5, 0)
 shape = SubResource("RectangleShape2D_m02it")
 
 [node name="UpgradeTooltip" type="PanelContainer" parent="."]
-process_priority = -1
 visible = false
 top_level = true
 z_index = 50
@@ -216,8 +197,8 @@ offset_left = -114.0
 offset_right = 115.0
 offset_bottom = 88.0
 mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_pduhd")
-script = ExtResource("3_m02it")
+theme_override_styles/panel = SubResource("StyleBoxFlat_vcb10")
+script = ExtResource("3_cxru6")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UpgradeTooltip"]
 layout_mode = 2
@@ -227,11 +208,11 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
 mouse_filter = 2
-theme_override_fonts/normal_font = ExtResource("4_pyyog")
-theme_override_fonts/bold_font = ExtResource("4_pyyog")
-theme_override_fonts/bold_italics_font = ExtResource("4_pyyog")
-theme_override_fonts/italics_font = ExtResource("4_pyyog")
-theme_override_fonts/mono_font = ExtResource("4_pyyog")
+theme_override_fonts/normal_font = ExtResource("4_ieivf")
+theme_override_fonts/bold_font = ExtResource("4_ieivf")
+theme_override_fonts/bold_italics_font = ExtResource("4_ieivf")
+theme_override_fonts/italics_font = ExtResource("4_ieivf")
+theme_override_fonts/mono_font = ExtResource("4_ieivf")
 theme_override_font_sizes/normal_font_size = 14
 theme_override_font_sizes/bold_font_size = 14
 theme_override_font_sizes/bold_italics_font_size = 14

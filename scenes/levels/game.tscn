@@ -1,21 +1,16 @@
-[gd_scene load_steps=5 format=3 uid="uid://byqp82f074n2d"]
+[gd_scene load_steps=6 format=3 uid="uid://byqp82f074n2d"]
 
 [ext_resource type="Script" uid="uid://bwtemibe28r1o" path="res://scripts/levels/game.gd" id="1_61jgc"]
-[ext_resource type="PackedScene" uid="uid://bdme57x3tpltp" path="res://scenes/cards/buyers/room_buyer.tscn" id="1_e6yxx"]
 [ext_resource type="PackedScene" uid="uid://cnccynmnl1c0q" path="res://scenes/cards/rooms/reception_card.tscn" id="2_eqihu"]
+[ext_resource type="FontFile" uid="uid://b3h7ukt25088t" path="res://assets/fonts/SCHLBKB.TTF" id="2_riktp"]
+[ext_resource type="Script" uid="uid://dbohmhrh80b6v" path="res://scripts/UI/rooms_camera.gd" id="3_61jgc"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_61jgc"]
+font = ExtResource("2_riktp")
 font_size = 40
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_61jgc")
-
-[node name="RoomBuyer" parent="." instance=ExtResource("1_e6yxx")]
-position = Vector2(108, 63.000008)
-scale = Vector2(0.4, 0.4)
-
-[node name="ReceptionCard" parent="." instance=ExtResource("2_eqihu")]
-position = Vector2(896, 512)
 
 [node name="Control" type="Control" parent="."]
 process_mode = 4
@@ -23,9 +18,12 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 1728.0
 offset_bottom = 972.0
+mouse_filter = 1
 
 [node name="MoneyLabel" type="Label" parent="Control"]
 process_mode = 1
+top_level = true
+z_index = 5
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -33,21 +31,39 @@ anchor_right = 1.0
 offset_left = -40.0
 offset_bottom = 23.0
 grow_horizontal = 0
+mouse_filter = 1
+theme_override_fonts/font = ExtResource("2_riktp")
+text = "Money = 100"
 
 [node name="NextRoundButton" type="Button" parent="Control"]
 process_mode = 1
+top_level = true
+z_index = 5
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -8.0
-offset_top = -8.0
+offset_left = -236.0
+offset_top = -63.0
 grow_horizontal = 0
 grow_vertical = 0
+theme_override_fonts/font = ExtResource("2_riktp")
 theme_override_font_sizes/font_size = 40
 text = "Next Round"
+
+[node name="ActionLabel" type="Label" parent="Control"]
+process_mode = 1
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_top = 25.0
+offset_bottom = 48.0
+grow_horizontal = 0
+text = "Actions = 5"
 
 [node name="GuestPosition1" type="Marker2D" parent="."]
 position = Vector2(1335, 122)
@@ -55,31 +71,25 @@ position = Vector2(1335, 122)
 [node name="GuestPosition2" type="Marker2D" parent="."]
 position = Vector2(1512, 122)
 
-[node name="GuestScorePanel" type="Panel" parent="." groups=["reception_card"]]
+[node name="BuyerPosition1" type="Marker2D" parent="."]
+position = Vector2(75, 122)
+
+[node name="BuyerPosition2" type="Marker2D" parent="."]
+position = Vector2(225, 122)
+
+[node name="BuyerPosition3" type="Marker2D" parent="."]
+position = Vector2(375, 122)
+
+[node name="GuestScorePanel" type="Panel" parent="."]
 visible = false
 top_level = true
 z_index = 5
 offset_right = 1728.0
 offset_bottom = 200.0
+mouse_filter = 1
 
 [node name="GuestScorePosition" type="Marker2D" parent="GuestScorePanel"]
 position = Vector2(854, 130)
-
-[node name="Label" type="Label" parent="GuestScorePanel"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -114.0
-offset_top = -92.0
-offset_right = 116.0
-offset_bottom = -37.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "Select room"
-label_settings = SubResource("LabelSettings_61jgc")
 
 [node name="YesButton" type="Button" parent="GuestScorePanel"]
 process_mode = 1
@@ -92,8 +102,26 @@ offset_top = 96.0
 offset_right = -119.0
 offset_bottom = 159.0
 grow_horizontal = 2
+theme_override_fonts/font = ExtResource("2_riktp")
 theme_override_font_sizes/font_size = 40
 text = "Yes"
+
+[node name="Label" type="Label" parent="GuestScorePanel/YesButton"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 42.0
+offset_top = -119.5
+offset_right = 272.0
+offset_bottom = -64.5
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+text = "Select room"
+label_settings = SubResource("LabelSettings_61jgc")
 
 [node name="NoButton" type="Button" parent="GuestScorePanel"]
 process_mode = 1
@@ -106,9 +134,34 @@ offset_top = 96.0
 offset_right = 193.0
 offset_bottom = 159.0
 grow_horizontal = 2
+theme_override_fonts/font = ExtResource("2_riktp")
 theme_override_font_sizes/font_size = 40
 text = "NO
 "
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+offset_top = 201.0
+offset_right = 1728.0
+offset_bottom = 909.0
+stretch = true
+
+[node name="CardViewport" type="SubViewport" parent="SubViewportContainer"]
+handle_input_locally = false
+physics_object_picking = true
+physics_object_picking_sort = true
+size = Vector2i(1728, 708)
+render_target_update_mode = 4
+
+[node name="RoomCards" type="Node2D" parent="SubViewportContainer/CardViewport"]
+
+[node name="ReceptionCard" parent="SubViewportContainer/CardViewport/RoomCards" instance=ExtResource("2_eqihu")]
+process_mode = 1
+position = Vector2(896, 384)
+
+[node name="RoomsCamera" type="Camera2D" parent="SubViewportContainer/CardViewport"]
+position = Vector2(864, 354)
+limit_enabled = false
+script = ExtResource("3_61jgc")
 
 [connection signal="pressed" from="Control/NextRoundButton" to="." method="_on_next_round_button_pressed"]
 [connection signal="pressed" from="GuestScorePanel/YesButton" to="." method="_on_yes_no_button_pressed" binds= [true]]

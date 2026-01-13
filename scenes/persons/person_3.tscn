@@ -1,9 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://cdxsixbghgduy"]
+[gd_scene load_steps=7 format=3 uid="uid://b4qde8nt5m2h2"]
 
-[ext_resource type="Script" uid="uid://6f07rj5l7tko" path="res://scripts/persons/person_1.gd" id="1_ibylh"]
-[ext_resource type="Texture2D" uid="uid://cinyfdc0vnlg3" path="res://assets/cards/persons/04_Person_Ant_Better(1).png" id="2_5bkpd"]
-[ext_resource type="Script" uid="uid://bshvub12tope7" path="res://scripts/UI/tooltip.gd" id="2_wn7a6"]
-[ext_resource type="FontFile" uid="uid://b3h7ukt25088t" path="res://assets/fonts/SCHLBKB.TTF" id="4_5bkpd"]
+[ext_resource type="Script" uid="uid://b7fcyvg2v6ge3" path="res://scripts/persons/person_3.gd" id="1_4v5bc"]
+[ext_resource type="Texture2D" uid="uid://brn1viika4jpu" path="res://assets/cards/persons/04_Person_Pig_Better.png" id="1_83rta"]
+[ext_resource type="Script" uid="uid://bshvub12tope7" path="res://scripts/UI/tooltip.gd" id="2_4v5bc"]
+[ext_resource type="FontFile" uid="uid://b3h7ukt25088t" path="res://assets/fonts/SCHLBKB.TTF" id="3_a1oaq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fek5t"]
 size = Vector2(91, 118.5)
@@ -24,17 +24,17 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
-[node name="Person1" type="Area2D"]
+[node name="Person3" type="Area2D"]
 top_level = true
 z_index = 6
-script = ExtResource("1_ibylh")
+script = ExtResource("1_4v5bc")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.25, 0.25)
-texture = ExtResource("2_5bkpd")
+texture = ExtResource("1_83rta")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-1, -1.5)
+position = Vector2(-0.5, -0.75)
 shape = SubResource("RectangleShape2D_fek5t")
 
 [node name="Tooltip" type="PanelContainer" parent="."]
@@ -45,23 +45,23 @@ offset_right = 229.0
 offset_bottom = 86.0
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_wn7a6")
-script = ExtResource("2_wn7a6")
+script = ExtResource("2_4v5bc")
 
 [node name="TooltipText" type="RichTextLabel" parent="Tooltip"]
 layout_mode = 2
 mouse_filter = 2
-theme_override_fonts/normal_font = ExtResource("4_5bkpd")
-theme_override_fonts/bold_font = ExtResource("4_5bkpd")
-theme_override_fonts/bold_italics_font = ExtResource("4_5bkpd")
-theme_override_fonts/italics_font = ExtResource("4_5bkpd")
-theme_override_fonts/mono_font = ExtResource("4_5bkpd")
+theme_override_fonts/normal_font = ExtResource("3_a1oaq")
+theme_override_fonts/bold_font = ExtResource("3_a1oaq")
+theme_override_fonts/bold_italics_font = ExtResource("3_a1oaq")
+theme_override_fonts/italics_font = ExtResource("3_a1oaq")
+theme_override_fonts/mono_font = ExtResource("3_a1oaq")
 theme_override_font_sizes/normal_font_size = 14
 theme_override_font_sizes/bold_font_size = 14
 theme_override_font_sizes/bold_italics_font_size = 14
 theme_override_font_sizes/italics_font_size = 14
 theme_override_font_sizes/mono_font_size = 14
 bbcode_enabled = true
-text = "[b] Ant [/b]  [br] It needs a room  for  2 coins. [br] He stays for two rounds"
+text = "[b] Pig [/b]  [br] It needs a room and a hallway  for 7 coins. [br] He stays for two rounds"
 fit_content = true
 autowrap_mode = 0
 

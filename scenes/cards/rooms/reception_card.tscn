@@ -1,6 +1,6 @@
-[gd_scene load_steps=11 format=3 uid="uid://cnccynmnl1c0q"]
+[gd_scene load_steps=13 format=3 uid="uid://cnccynmnl1c0q"]
 
-[ext_resource type="Texture2D" uid="uid://cyb34jip2obce" path="res://icon.svg" id="1_dctut"]
+[ext_resource type="Texture2D" uid="uid://c7si0jq5gmcxu" path="res://assets/cards/rooms/00_Reception_Better(2).png" id="1_dctut"]
 
 [sub_resource type="Animation" id="Animation_gebks"]
 length = 0.001
@@ -74,19 +74,26 @@ _data = {
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dctut"]
-size = Vector2(1, 20)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_gebks"]
-size = Vector2(1, 20)
+size = Vector2(4, 20.3)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lvuwy"]
-size = Vector2(1, 40.5)
+size = Vector2(1, 52.0885)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gebks"]
+size = Vector2(1, 48.04425)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jqgu2"]
+size = Vector2(1, 48.32171)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rxeu7"]
+size = Vector2(1, 53)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jsfnl"]
 
 [node name="ReceptionCard" type="Node2D" groups=["reception_cards"]]
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.25, 0.25)
 texture = ExtResource("1_dctut")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -97,58 +104,58 @@ libraries = {
 [node name="DoorArea" type="Area2D" parent="." groups=["doors"]]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DoorArea"]
-position = Vector2(64.5, 0)
+position = Vector2(65, 2.68)
 shape = SubResource("RectangleShape2D_dctut")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="DoorArea"]
-position = Vector2(-64.5, 0)
-shape = SubResource("RectangleShape2D_gebks")
+position = Vector2(-65, 2.68)
+shape = SubResource("RectangleShape2D_dctut")
 
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="DoorArea"]
-position = Vector2(-0.097699165, -64.49993)
+position = Vector2(-0.32, -65)
 rotation = -1.5707964
 shape = SubResource("RectangleShape2D_dctut")
 
 [node name="CollisionShape2D4" type="CollisionShape2D" parent="DoorArea"]
-position = Vector2(0.097699165, 64.49993)
-rotation = -1.5699203
-shape = SubResource("RectangleShape2D_gebks")
+position = Vector2(-0.32, 65)
+rotation = -1.5707964
+shape = SubResource("RectangleShape2D_dctut")
 
 [node name="WallArea" type="Area2D" parent="." groups=["walls"]]
 
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="WallArea"]
-position = Vector2(-64.5, -33)
+position = Vector2(-64.5, -36)
 shape = SubResource("RectangleShape2D_lvuwy")
 
 [node name="CollisionShape2D4" type="CollisionShape2D" parent="WallArea"]
-position = Vector2(-64.5, 32)
-shape = SubResource("RectangleShape2D_lvuwy")
+position = Vector2(-64.5, 38.977875)
+shape = SubResource("RectangleShape2D_gebks")
 
 [node name="CollisionShape2D5" type="CollisionShape2D" parent="WallArea"]
-position = Vector2(64.5, 32)
-shape = SubResource("RectangleShape2D_lvuwy")
+position = Vector2(64.5, 39.839146)
+shape = SubResource("RectangleShape2D_jqgu2")
 
 [node name="CollisionShape2D6" type="CollisionShape2D" parent="WallArea"]
-position = Vector2(64.5, -31.75)
-shape = SubResource("RectangleShape2D_lvuwy")
+position = Vector2(64.5, -35.5)
+shape = SubResource("RectangleShape2D_rxeu7")
 
 [node name="CollisionShape2D7" type="CollisionShape2D" parent="WallArea"]
-position = Vector2(-32.76658, 64.33584)
+position = Vector2(-37.76658, 64.33583)
 rotation = -1.5715082
 shape = SubResource("RectangleShape2D_lvuwy")
 
 [node name="CollisionShape2D8" type="CollisionShape2D" parent="WallArea"]
-position = Vector2(32.2334, 64.289566)
+position = Vector2(36.955948, 64.289764)
 rotation = -1.5715082
 shape = SubResource("RectangleShape2D_lvuwy")
 
 [node name="CollisionShape2D9" type="CollisionShape2D" parent="WallArea"]
-position = Vector2(32.14158, -64.710396)
+position = Vector2(37.000004, -64)
 rotation = -1.5715082
 shape = SubResource("RectangleShape2D_lvuwy")
 
 [node name="CollisionShape2D10" type="CollisionShape2D" parent="WallArea"]
-position = Vector2(-31.608406, -64.665016)
+position = Vector2(-37.679707, -63.995678)
 rotation = -1.5715082
 shape = SubResource("RectangleShape2D_lvuwy")
 

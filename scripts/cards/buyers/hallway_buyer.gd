@@ -1,10 +1,8 @@
 extends Area2D
 
+var cost = 5
 
-var cost = 2
-
-var room_scene = preload("res://scenes/cards/rooms/room_card.tscn")
-
+var room_scene = preload("res://scenes/cards/rooms/hallway_card.tscn")
 
 func _on_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and PlayerStats.state == PlayerStats.States.NORMAL and event.is_released():

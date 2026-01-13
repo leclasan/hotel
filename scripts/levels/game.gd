@@ -6,28 +6,39 @@ signal yes_no_button_pressed
 
 @onready var guest_position_1: Marker2D = $GuestPosition1
 @onready var guest_position_2: Marker2D = $GuestPosition2
+@onready var buyer_position_1: Marker2D = $BuyerPosition1
+@onready var buyer_position_2: Marker2D = $BuyerPosition2
+@onready var buyer_position_3: Marker2D = $BuyerPosition3
 @onready var money_label: Label = $Control/MoneyLabel
+@onready var action_label: Label = $Control/ActionLabel
 @onready var guest_score_panel: Panel = $GuestScorePanel
 @onready var guest_score_position: Marker2D = $GuestScorePanel/GuestScorePosition
 @onready var yes_button: Button = $GuestScorePanel/YesButton
 @onready var no_button: Button = $GuestScorePanel/NoButton
+@onready var room_cards: Node2D = $SubViewportContainer/CardViewport/RoomCards
+
+var guest_list = [preload("res://scenes/persons/person_1.tscn"), preload("res://scenes/persons/person_2.tscn"), preload("res://scenes/persons/person_3.tscn")]
+var buyer_list = [preload("res://scenes/cards/buyers/room_buyer.tscn"), preload("res://scenes/cards/buyers/hallway_buyer.tscn")]
 
 var guest_1
 var guest_2
 
 var round_count = 0
+var actions = 0
 
 var if_score_guest = true
 var occupied_room
 
 func _ready() -> void:
-	money_label.text = str(PlayerStats.money)
+	money_label.text = "Money: " + str(PlayerStats.money)
+	action_label.text = "Actions: " + str(actions)
 	create_guests()
+	create_buyers()
 
 
 func _process(_delta: float) -> void:
-	money_label.text = str(PlayerStats.money)
-
+	money_label.text = "Money: " + str(PlayerStats.money)
+	action_label.text = "Actions: " + str(actions)
 
 
 func _on_next_round_button_pressed() -> void:
@@ -40,18 +51,35 @@ func _on_next_round_button_pressed() -> void:
 		prepare_guest_score_panel(false)
 		PlayerStats.state = PlayerStats.States.NORMAL
 		create_guests()
+		eliminate_buyers()
+		create_buyers()
+		actions = 0
 		next_round.emit()
 
 
 func create_guests():
-	var guest_1_scene = WorldStats.guest_list.pick_random().instantiate()
-	var guest_2_scene = WorldStats.guest_list.pick_random().instantiate()
+	var guest_1_scene = guest_list.pick_random().instantiate()
+	var guest_2_scene = guest_list.pick_random().instantiate()
 	guest_1_scene.position = guest_position_1.position
 	guest_2_scene.position = guest_position_2.position
 	guest_1_scene.index = 1
 	guest_2_scene.index = 2
 	add_child(guest_1_scene)
 	add_child(guest_2_scene)
+
+func create_buyers():
+	var buyer_1_scene = buyer_list.pick_random().instantiate()
+	var buyer_2_scene = buyer_list.pick_random().instantiate()
+	var buyer_3_scene = buyer_list.pick_random().instantiate()
+	buyer_1_scene.position = buyer_position_1.position
+	buyer_2_scene.position = buyer_position_2.position
+	buyer_3_scene.position = buyer_position_3.position
+	add_child(buyer_1_scene)
+	add_child(buyer_2_scene)
+	add_child(buyer_3_scene)
+
+func eliminate_buyers():
+	get_tree().get_nodes_in_group("buyers").all(queue_free)
 
 func score_guest(guest):
 	guest.position = guest_score_position.position
@@ -87,6 +115,27 @@ func place_guest(guest):
 		occupied_room.rounds_occupied = guest.rounds_occupied 
 		for room in get_tree().get_nodes_in_group("room_cards"):
 			room.state = room.States.POSITIONED
+	if guest.room_1 == "hallway":
+		for room in get_tree().get_nodes_in_group("hallway_cards"):
+			room.state = room.States.GUESTSCORE
+		await room_selected
+		occupied_room.rounds_occupied = guest.rounds_occupied 
+		for room in get_tree().get_nodes_in_group("hallway_cards"):
+			room.state = room.States.POSITIONED
+	if guest.room_2 == "hallway":
+		for room in get_tree().get_nodes_in_group("hallway_cards"):
+			room.state = room.States.GUESTSCORE
+		await room_selected
+		occupied_room.rounds_occupied = guest.rounds_occupied 
+		for room in get_tree().get_nodes_in_group("hallway_cards"):
+			room.state = room.States.POSITIONED
+	if guest.room_3 == "hallway":
+		for room in get_tree().get_nodes_in_group("hallway_cards"):
+			room.state = room.States.GUESTSCORE
+		await room_selected
+		occupied_room.rounds_occupied = guest.rounds_occupied 
+		for room in get_tree().get_nodes_in_group("hallway_cards"):
+			room.state = room.States.POSITIONED
 
 func place_guest_extra(guest):
 	pass
@@ -94,6 +143,7 @@ func place_guest_extra(guest):
 func select_room(node):
 	node.animation_player.play("occupied")
 	node.is_occupied = true
+	PlayerStats.money += node.level -1
 	occupied_room = node
 	room_selected.emit()
 
@@ -107,33 +157,63 @@ func prepare_guest_score_button(on: bool):
 	no_button.disabled = not on
 
 func see_if_score_guest(guest) -> void:
-	var nodes_in_tree: Array = get_children()
+	var card_nodes_in_tree: Array = room_cards.get_children()
 	if guest.room_1 == "room":
 		var ok = false
-		for node in nodes_in_tree:
-			if node.is_in_group("room_cards"):
+		for node in card_nodes_in_tree:
+			if node.is_in_group("room_cards") and not node.is_occupied:
 				ok = true
-				nodes_in_tree.erase(node)
+				card_nodes_in_tree.erase(node)
 				break
 		if not ok:
 			if_score_guest = false
 			return
 	if guest.room_2 == "room":
 		var ok = false
-		for node in nodes_in_tree:
-			if node.is_in_group("room_cards"):
+		for node in card_nodes_in_tree:
+			if node.is_in_group("room_cards") and not node.is_occupied:
 				ok = true
-				nodes_in_tree.erase(node)
+				card_nodes_in_tree.erase(node)
 				break
 		if not ok:
 			if_score_guest = false
 			return
 	if guest.room_3 == "room":
 		var ok = false
-		for node in nodes_in_tree:
-			if node.is_in_group("room_cards"):
+		for node in card_nodes_in_tree:
+			if node.is_in_group("room_cards") and not node.is_occupied:
 				ok = true
-				nodes_in_tree.erase(node)
+				card_nodes_in_tree.erase(node)
+				break
+		if not ok:
+			if_score_guest = false
+			return
+	if guest.room_1 == "hallway":
+		var ok = false
+		for node in card_nodes_in_tree:
+			if node.is_in_group("hallway_cards") and not node.is_occupied:
+				ok = true
+				card_nodes_in_tree.erase(node)
+				break
+		if not ok:
+			if_score_guest = false
+			return
+	if guest.room_2 == "hallway":
+		var ok = false
+		for node in card_nodes_in_tree:
+			if node.is_in_group("hallway_cards") and not node.is_occupied:
+				ok = true
+				card_nodes_in_tree.erase(node)
+				break
+		if not ok:
+			if_score_guest = false
+			return
+	if guest.room_3 == "hallway":
+		var ok = false
+		for node in card_nodes_in_tree:
+			if node.is_in_group("hallway_cards") and not node.is_occupied:
+				ok = true
+				card_nodes_in_tree.erase(node)
 				break
 		if not ok:
 			if_score_guest = false

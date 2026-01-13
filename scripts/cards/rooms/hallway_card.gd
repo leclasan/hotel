@@ -1,8 +1,8 @@
 extends Node2D
 
-var cost = 2 # Mismo coste que el buyer para que cuando la elimines te de el dinero
-
 var level = 1
+
+var cost = 5 # Mismo coste que el buyer para que te devuelva el dinero si la cancelas
 
 @onready var door_area: Area2D = $DoorArea
 @onready var wall_area: Area2D = $WallArea
@@ -19,6 +19,7 @@ var state = States.DRAGGABLE
 var is_mouse = true
 
 func _ready() -> void:
+	scale = get_parent().scale
 	top_level = true
 	PlayerStats.state = PlayerStats.States.DRAGGING
 	total_parent.next_round.connect(next_round)
@@ -41,7 +42,6 @@ func _process(delta: float) -> void:
 			elif Input.is_action_just_pressed("eliminate"):
 				PlayerStats.money += cost
 				queue_free()
-				PlayerStats.state = PlayerStats.States.NORMAL
 			move()
 		States.POSITIONED:
 			if animation_player.current_animation != "normal" and animation_player.current_animation != "occupied":
