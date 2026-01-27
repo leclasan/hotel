@@ -8,7 +8,9 @@ var level = 1
 @onready var wall_area: Area2D = $WallArea
 @onready var center_area: Area2D = $CenterArea
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
-@onready var total_parent: Node2D = get_parent().get_parent().get_parent().get_parent()
+@onready var player_parent: Node2D = get_parent().get_parent().get_parent().get_parent()
+@onready var total_parent: Node = get_parent().get_parent().get_parent().get_parent().get_parent()
+
 
 var is_occupied = false
 var rounds_occupied = 0
@@ -20,28 +22,28 @@ var is_mouse = true
 
 func _ready() -> void:
 	top_level = true
-	PlayerStats.state = PlayerStats.States.DRAGGING
+	player_parent.state = player_parent.States.DRAGGING
 	total_parent.next_round.connect(next_round)
 
 func _process(delta: float) -> void:
 	match state:
 		States.DRAGGABLE:
-			if PlayerStats.state != PlayerStats.States.DRAGGING:
+			if player_parent.state != player_parent.States.DRAGGING:
 				queue_free()
 			if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) and check_connections():
 				state = States.POSITIONED
-				PlayerStats.state = PlayerStats.States.NORMAL
+				player_parent.state = player_parent.States.NORMAL
 				animation_player.play("normal")
 				top_level = false
-				total_parent.actions += 1
+				player_parent.actions += 1
 			elif Input.is_action_just_pressed("right_click"):
 				rotate(PI/2)
 				if rotation > 2*PI:
 					rotation = 0.0
 			elif Input.is_action_just_pressed("eliminate"):
-				PlayerStats.money += cost
+				player_parent.money += cost
 				queue_free()
-				PlayerStats.state = PlayerStats.States.NORMAL
+				player_parent.state = player_parent.States.NORMAL
 			move()
 		States.POSITIONED:
 			if animation_player.current_animation != "normal" and animation_player.current_animation != "occupied":
@@ -87,4 +89,4 @@ func next_round():
 
 func _on_mouse_detect_area_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 	if state == States.GUESTSCORE and not is_occupied and event is InputEventMouseButton and event.button_index == 1 and event.pressed:
-		total_parent.select_room(self)
+		player_parent.select_room(self)

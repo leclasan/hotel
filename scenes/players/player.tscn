@@ -1,16 +1,17 @@
 [gd_scene load_steps=6 format=3 uid="uid://byqp82f074n2d"]
 
-[ext_resource type="Script" uid="uid://bwtemibe28r1o" path="res://scripts/levels/game.gd" id="1_61jgc"]
-[ext_resource type="PackedScene" uid="uid://cnccynmnl1c0q" path="res://scenes/cards/rooms/reception_card.tscn" id="2_eqihu"]
-[ext_resource type="FontFile" uid="uid://b3h7ukt25088t" path="res://assets/fonts/SCHLBKB.TTF" id="2_riktp"]
-[ext_resource type="Script" uid="uid://dbohmhrh80b6v" path="res://scripts/UI/rooms_camera.gd" id="3_61jgc"]
+[ext_resource type="Script" uid="uid://bwtemibe28r1o" path="res://scripts/players/player.gd" id="1_edvpf"]
+[ext_resource type="FontFile" uid="uid://b3h7ukt25088t" path="res://assets/fonts/SCHLBKB.TTF" id="2_olb2f"]
+[ext_resource type="PackedScene" uid="uid://cnccynmnl1c0q" path="res://scenes/cards/rooms/reception_card.tscn" id="3_sguum"]
+[ext_resource type="Script" uid="uid://dbohmhrh80b6v" path="res://scripts/UI/rooms_camera.gd" id="4_jwv1m"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_61jgc"]
-font = ExtResource("2_riktp")
+font = ExtResource("2_olb2f")
 font_size = 40
 
-[node name="Game" type="Node2D"]
-script = ExtResource("1_61jgc")
+[node name="Player" type="Node2D"]
+visible = false
+script = ExtResource("1_edvpf")
 
 [node name="Control" type="Control" parent="."]
 process_mode = 4
@@ -32,10 +33,10 @@ offset_left = -40.0
 offset_bottom = 23.0
 grow_horizontal = 0
 mouse_filter = 1
-theme_override_fonts/font = ExtResource("2_riktp")
+theme_override_fonts/font = ExtResource("2_olb2f")
 text = "Money = 100"
 
-[node name="NextRoundButton" type="Button" parent="Control"]
+[node name="NextTurnButton" type="Button" parent="Control"]
 process_mode = 1
 top_level = true
 z_index = 5
@@ -49,7 +50,7 @@ offset_left = -236.0
 offset_top = -63.0
 grow_horizontal = 0
 grow_vertical = 0
-theme_override_fonts/font = ExtResource("2_riktp")
+theme_override_fonts/font = ExtResource("2_olb2f")
 theme_override_font_sizes/font_size = 40
 text = "Next Round"
 
@@ -102,7 +103,7 @@ offset_top = 96.0
 offset_right = -119.0
 offset_bottom = 159.0
 grow_horizontal = 2
-theme_override_fonts/font = ExtResource("2_riktp")
+theme_override_fonts/font = ExtResource("2_olb2f")
 theme_override_font_sizes/font_size = 40
 text = "Yes"
 
@@ -134,7 +135,7 @@ offset_top = 96.0
 offset_right = 193.0
 offset_bottom = 159.0
 grow_horizontal = 2
-theme_override_fonts/font = ExtResource("2_riktp")
+theme_override_fonts/font = ExtResource("2_olb2f")
 theme_override_font_sizes/font_size = 40
 text = "NO
 "
@@ -150,19 +151,19 @@ handle_input_locally = false
 physics_object_picking = true
 physics_object_picking_sort = true
 size = Vector2i(1728, 708)
-render_target_update_mode = 4
+render_target_update_mode = 0
 
 [node name="RoomCards" type="Node2D" parent="SubViewportContainer/CardViewport"]
 
-[node name="ReceptionCard" parent="SubViewportContainer/CardViewport/RoomCards" instance=ExtResource("2_eqihu")]
+[node name="ReceptionCard" parent="SubViewportContainer/CardViewport/RoomCards" instance=ExtResource("3_sguum")]
 process_mode = 1
 position = Vector2(896, 384)
 
 [node name="RoomsCamera" type="Camera2D" parent="SubViewportContainer/CardViewport"]
 position = Vector2(864, 354)
 limit_enabled = false
-script = ExtResource("3_61jgc")
+script = ExtResource("4_jwv1m")
 
-[connection signal="pressed" from="Control/NextRoundButton" to="." method="_on_next_round_button_pressed"]
+[connection signal="pressed" from="Control/NextTurnButton" to="." method="_on_next_turn_button_pressed"]
 [connection signal="pressed" from="GuestScorePanel/YesButton" to="." method="_on_yes_no_button_pressed" binds= [true]]
 [connection signal="pressed" from="GuestScorePanel/NoButton" to="." method="_on_yes_no_button_pressed" binds= [false]]
