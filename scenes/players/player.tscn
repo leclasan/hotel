@@ -165,5 +165,3 @@ limit_enabled = false
 script = ExtResource("4_jwv1m")
 
 [connection signal="pressed" from="Control/NextTurnButton" to="." method="_on_next_turn_button_pressed"]
-[connection signal="pressed" from="GuestScorePanel/YesButton" to="." method="_on_yes_no_button_pressed" binds= [true]]
-[connection signal="pressed" from="GuestScorePanel/NoButton" to="." method="_on_yes_no_button_pressed" binds= [false]]
